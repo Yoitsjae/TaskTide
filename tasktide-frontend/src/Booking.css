@@ -1,0 +1,58 @@
+.booking-container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  color: #117a8b;
+  text-align: center;
+}
+
+.booking-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.booking-form h2 {
+  color: #17a2b8;
+}
+
+.booking-form label {
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #6c757d;
+}
+
+.time-slot-select {
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.submit-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  background-color: #dc3545;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.submit-button:hover {
+  background-color: #c82333;
+}
+
+.error-message {
+  color: #dc3545;
+}
+
+.confirmation-message {
+  color: #17a2b8;
+}

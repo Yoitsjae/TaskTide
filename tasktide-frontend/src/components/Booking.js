@@ -1,74 +1,85 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import './Booking.css'; // Include CSS for styling
 
-const Booking = () => {
-    const { id } = useParams();
-    const [service, setService] = useState({});
-    const [date, setDate] = useState('');
-    const [orderId, setOrderId] = useState('');
+const Booking = ({ match }) => {
+    const [serviceProvider, setServiceProvider] = useState(null);
+    const [selectedTimeSlot, setSelectedTimeSlot] = useState('');
+    const [bookingDetails, setBookingDetails] = useState({});
+    const [error, setError] = useState('');
+    const [confirmation, setConfirmation] = useState('');
+
+    const serviceProviderId = match.params.id; // Assuming you pass serviceProviderId as a route parameter
 
     useEffect(() => {
-        const fetchService = async () => {
-            const result = await axios.get(`/api/services/${id}`);
-            setService(result.data);
-        };
-        fetchService();
-    }, [id]);
+        // Fetch service provider details from the API
+        axios.get(`/api/service-providers/${serviceProviderId}`)
+            .then(response => {
+                setServiceProvider(response.data);
+                setBookingDetails({
+                    providerName: response.data.name,
+                    providerEmail: response.data.email,
+                });
+            })
+            .catch(error => setError('Error fetching service provider details.'));
+    }, [serviceProviderId]);
 
-    const handleBooking = async () => {
-        const token = localStorage.getItem('token');
-        if (!token) {
-            alert('Please log in to book a service.');
-            return;
-        }
-        try {
-            const bookingResult = await axios.post('/api/bookings', { serviceId: service._id, date }, {
-                headers: { Authorization: `Bearer ${token}` }
-            });
-            const bookingId = bookingResult.data._id;
-            const paymentResult = await axios.post('/api/payments/create', { bookingId, amount: service.price }, {
-                headers: { Authorization: `Bearer ${token}` }
-            });
-            setOrderId(paymentResult.data.id);
-        } catch (err) {
-            alert('Error booking service: ' + err.message);
-        }
+    const handleTimeSlotChange = (e) => {
+        setSelectedTimeSlot(e.target.value);
     };
 
-    const handlePayment = async () => {
-        const token = localStorage.getItem('token');
-        if (!token) {
-            alert('Please log in to make a payment.');
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        
+        if (!selectedTimeSlot) {
+            setError('Please select a time slot.');
             return;
         }
-        try {
-            const captureResult = await axios.post('/api/payments/capture', { orderId, bookingId: service._id }, {
-                headers: { Authorization: `Bearer ${token}` }
-            });
-            alert('Payment successful! Booking confirmed.');
-        } catch (err) {
-            alert('Error processing payment: ' + err.message);
-        }
+        
+        const bookingData = {
+            serviceProviderId,
+            timeSlot: selectedTimeSlot,
+            customerId: '12345', // Replace with actual customer ID from user state or context
+        };
+
+        axios.post('/api/bookings', bookingData)
+            .then(response => {
+                setConfirmation('Booking confirmed! We have sent a confirmation email.');
+                setError('');
+            })
+            .catch(error => setError('Error creating booking.'));
     };
 
     return (
-        <div className="container">
-            <h2>Book Service</h2>
-            <div className="service-details">
-                <h3>{service.title}</h3>
-                <p>{service.description}</p>
-                <p>Price: ${service.price}</p>
-                <p>Location: {service.location}</p>
-            </div>
-            <div className="booking-form">
-                <label>Date:</label>
-                <input type="date" value={date} onChange={(e) => setDate(e.target.value)} />
-                <button onClick={handleBooking} className="cta-button">Book Now</button>
-            </div>
-            {orderId && <button onClick={handlePayment} className="cta-button">Make Payment</button>}
+        <div className="booking-container">
+            <h1>Book a Service</h1>
+            {serviceProvider ? (
+                <div className="booking-form">
+                    <h2>Service Provider: {serviceProvider.name}</h2>
+                    <p><strong>Email:</strong> {serviceProvider.email}</p>
+                    <form onSubmit={handleSubmit}>
+                        <label htmlFor="time-slot">Select Time Slot:</label>
+                        <select
+                            id="time-slot"
+                            value={selectedTimeSlot}
+                            onChange={handleTimeSlotChange}
+                            className="time-slot-select"
+                        >
+                            <option value="">--Select--</option>
+                            {serviceProvider.availableTimeSlots.map((slot, index) => (
+                                <option key={index} value={slot}>{slot}</option>
+                            ))}
+                        </select>
+                        <button type="submit" className="submit-button">Book Now</button>
+                    </form>
+                    {error && <p className="error-message">{error}</p>}
+                    {confirmation && <p className="confirmation-message">{confirmation}</p>}
+                </div>
+            ) : (
+                <p>Loading service provider details...</p>
+            )}
         </div>
     );
-}
+};
 
 export default Booking;
