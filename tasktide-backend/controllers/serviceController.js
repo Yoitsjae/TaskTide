@@ -1,45 +1,31 @@
 const Service = require('../models/Service');
 
-// Create a new service
-exports.createService = async (req, res) => {
-  try {
-    const service = new Service(req.body);
-    await service.save();
-    res.status(201).json(service);
-  } catch (error) {
-    res.status(500).json({ message: 'Error creating service', error });
-  }
-};
-
-// Get all services
-exports.getAllServices = async (req, res) => {
+const getServices = async (req, res) => {
   try {
     const services = await Service.find();
-    res.status(200).json(services);
+    res.json(services);
   } catch (error) {
-    res.status(500).json({ message: 'Error fetching services', error });
+    res.status(500).json({ message: error.message });
   }
 };
 
-// Update a service
-exports.updateService = async (req, res) => {
+const createService = async (req, res) => {
+  const { title, description, price, location } = req.body;
+
   try {
-    const { serviceId } = req.params;
-    const updates = req.body;
-    const service = await Service.findByIdAndUpdate(serviceId, updates, { new: true });
-    res.status(200).json(service);
+    const service = new Service({
+      title,
+      description,
+      price,
+      location,
+      providerId: req.user.id,
+    });
+
+    const createdService = await service.save();
+    res.status(201).json(createdService);
   } catch (error) {
-    res.status(500).json({ message: 'Error updating service', error });
+    res.status(500).json({ message: error.message });
   }
 };
 
-// Delete a service
-exports.deleteService = async (req, res) => {
-  try {
-    const { serviceId } = req.params;
-    await Service.findByIdAndDelete(serviceId);
-    res.status(200).json({ message: 'Service deleted successfully' });
-  } catch (error) {
-    res.status(500).json({ message: 'Error deleting service', error });
-  }
-};
+module.exports = { getServices, createService };
