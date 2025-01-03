@@ -1,17 +1,43 @@
-// This is where you implement user-related logic (signup, login)
+const User = require('../models/User');
 
-exports.createUser = (req, res) => {
-  const { username, password } = req.body;
-
-  // Logic to create a new user (e.g., save to DB)
-  // For now, we are sending a simple message
-  res.status(201).json({ message: 'User created successfully', username });
+// Get user profile
+exports.getProfile = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching profile', error });
+  }
 };
 
-exports.loginUser = (req, res) => {
-  const { username, password } = req.body;
+// Update user profile
+exports.updateProfile = async (req, res) => {
+  try {
+    const updates = req.body;
+    const user = await User.findByIdAndUpdate(req.user.id, updates, { new: true });
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ message: 'Error updating profile', error });
+  }
+};
 
-  // Logic to authenticate user
-  // For now, we are sending a success message
-  res.status(200).json({ message: 'User logged in successfully', username });
+// Get all users (admin only)
+exports.getAllUsers = async (req, res) => {
+  try {
+    const users = await User.find();
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching users', error });
+  }
+};
+
+// Delete a user (admin only)
+exports.deleteUser = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    await User.findByIdAndDelete(userId);
+    res.status(200).json({ message: 'User deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error deleting user', error });
+  }
 };
