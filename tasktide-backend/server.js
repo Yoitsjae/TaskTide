@@ -1,26 +1,25 @@
+// File: tasktide-backend/server.js
 const express = require('express');
 const dotenv = require('dotenv');
-const connectDB = require('./config/db');
-const userRoutes = require('./routes/userRoutes');
-const serviceRoutes = require('./routes/serviceRoutes');
-const bookingRoutes = require('./routes/bookingRoutes');
-
 dotenv.config();
-connectDB();
 
 const app = express();
+const port = process.env.PORT || 5000;
+
 app.use(express.json());
 
-app.use('/api/users', userRoutes);
+// Routes
+const authRoutes = require('./routes/auth');
+const serviceRoutes = require('./routes/serviceRoutes');
+const userRoutes = require('./routes/userRoutes');
+
+app.use('/api/auth', authRoutes);
 app.use('/api/services', serviceRoutes);
-app.use('/api/bookings', bookingRoutes);
+app.use('/api/users', userRoutes);
 
-const paypalRoutes = require('./routes/paypalRoutes');
-
-app.use('/api/paypal', paypalRoutes);
-
-const PORT = process.env.PORT || 5000;
-
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+// Global error handler
+app.use((err, req, res, next) => {
+    res.status(err.status || 500).json({ error: err.message });
 });
+
+app.listen(port, () => console.log(`Server running on port ${port}`));
