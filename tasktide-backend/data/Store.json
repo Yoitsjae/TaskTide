@@ -1,0 +1,3 @@
+mkdir -p data
+echo "[]" > data/Store.json
+chmod 666 data/Store.json

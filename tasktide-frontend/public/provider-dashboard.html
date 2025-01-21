@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Provider Dashboard</title>
+    <link rel="stylesheet" href="./css/dashboard.css">
+</head>
+<body>
+    <nav>
+        <div>TaskTide</div>
+        <div>
+            <a href="#">Dashboard</a>
+            <a href="#">Profile</a>
+            <a href="login.html">Logout</a>
+        </div>
+    </nav>
+    <div class="dashboard-container">
+        <h1>Welcome, Provider!</h1>
+        <div class="section">
+            <h2>Assigned Tasks</h2>
+            <ul id="assigned-tasks">
+                <!-- Dynamic tasks will be injected here -->
+            </ul>
+        </div>
+        <div class="section">
+            <h2>Task Requests</h2>
+            <ul id="task-requests">
+                <!-- Dynamic requests will be injected here -->
+            </ul>
+        </div>
+        <div class="section">
+            <h2>Earnings</h2>
+            <p id="earnings">Loading...</p>
+        </div>
+    </div>
+    <script src="./js/provider-dashboard.js"></script>
+</body>
+</html>

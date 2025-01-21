@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Admin Panel</h1>
+        <nav>
+            <a href="index.html">Logout</a>
+        </nav>
+    </header>
+    <main>
+        <section class="user-management">
+            <h2>User Management</h2><table>
+                <thead>
+                  <tr>
+                    <th>Task ID</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="task-table">
+                  <!-- Example row -->
+                  <tr id="task-123">
+                    <td>123</td>
+                    <td>Design Homepage</td>
+                    <td class="task-status">Pending</td>
+                    <td>
+                      <button onclick="approveTask(123)">Approve</button>
+                      <button onclick="rejectTask(123)">Reject</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              
+        </section>
+        <section class="service-management">
+            <h2>Service Management</h2><table>
+                <thead>
+                  <tr>
+                    <th>Task ID</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="task-table">
+                  <!-- Example row -->
+                  <tr id="task-123">
+                    <td>123</td>
+                    <td>Design Homepage</td>
+                    <td class="task-status">Pending</td>
+                    <td>
+                      <button onclick="approveTask(123)">Approve</button>
+                      <button onclick="rejectTask(123)">Reject</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              
+        </section>
+    </main>
+    <script src="./js/admin-websocket.js"></script>
+</body>
+</html>

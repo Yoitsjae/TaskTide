@@ -1,17 +1,29 @@
-const express = require('express');
-const dashboardController = require('../controllers/dashboardController');
-const { isAuthenticated, authorizeRoles } = require('../middleware/auth');
-
+const express = require("express");
 const router = express.Router();
+const fs = require("fs");
 
-// Admin dashboard
-router.get('/admin', isAuthenticated, authorizeRoles('admin'), dashboardController.adminDashboard);
+// Dashboard route
+router.get("/dashboard", (req, res) => {
+  const email = req.query.email;
+  const storeFilePath = "./data/Store.json";
 
-// User dashboard
-router.get('/user', isAuthenticated, authorizeRoles('user'), dashboardController.userDashboard);
+  if (!email) {
+    return res.status(400).send("Invalid dashboard request.");
+  }
 
-// Other role-specific dashboards can be added similarly
-// e.g., a route for 'manager' role, if applicable
-router.get('/manager', isAuthenticated, authorizeRoles('manager'), dashboardController.managerDashboard);
+  try {
+    const fileData = JSON.parse(fs.readFileSync(storeFilePath, "utf-8"));
+    const user = fileData.find((u) => u.email === email);
+
+    if (!user) {
+      return res.status(404).send("User not found.");
+    }
+
+    res.status(200).json(user);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Server error.");
+  }
+});
 
 module.exports = router;

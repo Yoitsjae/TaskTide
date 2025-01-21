@@ -1,51 +1,35 @@
-// File: tasktide-backend/routes/auth.js
-const express = require('express');
-const pool = require('../utils/db');
-const bcrypt = require('bcryptjs'); // Changed from bcrypt to bcryptjs
-const jwt = require('jsonwebtoken');
+const express = require("express");
+const fs = require("fs");
+const path = require("path");
 
 const router = express.Router();
+const storePath = path.join(__dirname, "../data/Store.json");
 
-// Register route
-router.post('/register', async (req, res) => {
-    const { email, password, name } = req.body;
+// Signup Endpoint
+router.post("/signup", async (req, res) => {
+    const { name, email, password, role } = req.body;
 
-    try {
-        const hashedPassword = await bcrypt.hash(password, 10); // Hashing the password
-
-        const result = await pool.query(
-            'INSERT INTO users (email, password, name) VALUES ($1, $2, $3) RETURNING *',
-            [email, hashedPassword, name]
-        );
-
-        const user = result.rows[0];
-        res.status(201).json({ user });
-    } catch (err) {
-        res.status(500).json({ error: 'User registration failed' });
+    if (!name || !email || !password || !role) {
+        return res.status(400).json({ message: "All fields are required." });
     }
-});
-
-// Login route
-router.post('/login', async (req, res) => {
-    const { email, password } = req.body;
 
     try {
-        const result = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
+        const storeData = JSON.parse(fs.readFileSync(storePath, "utf-8"));
+        const userExists = storeData.find((user) => user.email === email);
 
-        const user = result.rows[0];
-        if (!user) {
-            return res.status(400).json({ error: 'Invalid email or password' });
+        if (userExists) {
+            return res.status(400).json({ message: "User already exists." });
         }
 
-        const isMatch = await bcrypt.compare(password, user.password); // Comparing passwords
-        if (!isMatch) {
-            return res.status(400).json({ error: 'Invalid email or password' });
-        }
+        const newUser = { name, email, password, role };
+        storeData.push(newUser);
 
-        const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-        res.json({ token });
+        fs.writeFileSync(storePath, JSON.stringify(storeData, null, 2), "utf-8");
+
+        res.status(201).json({ message: "Signup successful.", role });
     } catch (err) {
-        res.status(500).json({ error: 'Login failed' });
+        console.error("Error during signup:", err);
+        res.status(500).json({ message: "Server error. Could not complete signup." });
     }
 });
 

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="./css/dashboard.css">
+</head>
+<body>
+    <nav>
+        <div>TaskTide</div>
+        <div>
+            <a href="#">Dashboard</a>
+            <a href="login.html">Logout</a>
+        </div>
+    </nav>
+    <div class="dashboard-container">
+        <h1>Welcome, Admin!</h1>
+        <div class="section">
+            <h2>User Management</h2>
+            <table>
+                <thead>
+                  <tr>
+                    <th>Task ID</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="task-table">
+                  <!-- Example row -->
+                  <tr id="task-123">
+                    <td>123</td>
+                    <td>Design Homepage</td>
+                    <td class="task-status">Pending</td>
+                    <td>
+                      <button onclick="approveTask(123)">Approve</button>
+                      <button onclick="rejectTask(123)">Reject</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              
+        </div>
+        <div class="section">
+            <h2>Task Management</h2>
+            <table>
+                <thead>
+                  <tr>
+                    <th>Task ID</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="task-table">
+                  <!-- Example row -->
+                  <tr id="task-123">
+                    <td>123</td>
+                    <td>Design Homepage</td>
+                    <td class="task-status">Pending</td>
+                    <td>
+                      <button onclick="approveTask(123)">Approve</button>
+                      <button onclick="rejectTask(123)">Reject</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              
+        </div>
+        <div class="section">
+            <h2>Analytics</h2>
+            <p>Total Tasks: <span id="total-tasks">0</span></p>
+            <p>Completed Tasks: <span id="completed-tasks">0</span></p>
+            <p>Total Earnings: <span id="total-earnings">$0</span></p>
+            <p>Active Users: <span id="active-users">0</span></p>
+        </div>
+    </div>
+    <script src="./js/admin-dashboard.js"></script>
+    <script src="./js/admin-websocket.js"></script>
+</body>
+</html>

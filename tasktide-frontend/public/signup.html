@@ -1,92 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TaskTide - Local Service Marketplace</title>
-  <link rel="stylesheet" href="signup.css">
-  <script defer src="script.js"></script> <!-- Link to the JavaScript file -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-  <header>
-    <div class="nav-bar">
-      <h1 class="logo">TaskTide</h1>
-      <nav>
-        <ul class="nav-links">
-          <li><a href="home.html">Home</a></li>
-          <li><a href="services.html">Services</a></li>
-          <li><a href="about.html">About</a></li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
-        <button class="login-btn" id="loginBtn">Login / Signup</button>
-        <button class="logout-btn" id="logoutBtn" style="display:none;">Logout</button>
-      </nav>
-    </div>
-  </header>
+    <form id="signup-form">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
 
-  <main>
-    <section class="main-content">
-      <!-- Main content of the marketplace -->
-    </section>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
 
-    <!-- Modal for Login/Signup -->
-    <div id="authModal" class="modal" style="display:none;">
-      <div class="modal-content">
-        <span class="close-btn" id="closeModal">&times;</span>
-        <div id="authForms">
-          <!-- Login Form -->
-          <div id="loginForm">
-            <h2>Login</h2>
-            <form id="login-form">
-              <label for="login-email">Email:</label>
-              <input type="email" id="login-email" required>
-              <label for="login-password">Password:</label>
-              <input type="password" id="login-password" required>
-              <button type="submit">Login</button>
-              <p id="loginError" style="color:red;display:none;">Invalid credentials</p>
-            </form>
-            <p>Don't have an account? <a href="#" id="showSignup">Sign up here</a></p>
-            <p><a href="#" id="forgotPassword">Forgot Password?</a></p>
-          </div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
 
-          <!-- Signup Form -->
-          <div id="signupForm" style="display:none;">
-            <h2>Sign Up</h2>
-            <form id="signup-form">
-              <label for="signup-name">Full Name:</label>
-              <input type="text" id="signup-name" required>
-              <label for="signup-email">Email:</label>
-              <input type="email" id="signup-email" required>
-              <label for="signup-password">Password:</label>
-              <input type="password" id="signup-password" required>
-              <label for="signup-role">Role:</label>
-              <select id="signup-role" required>
-                <option value="client">Client</option>
-                <option value="provider">Service Provider</option>
-              </select>
-              <button type="submit">Sign Up</button>
-              <p id="signupError" style="color:red;display:none;">Signup failed</p>
-            </form>
-            <p>Already have an account? <a href="#" id="showLogin">Log in here</a></p>
-          </div>
+        <label for="role">Role:</label>
+        <select id="role" name="role" required>
+            <option value="">Select Role</option>
+            <option value="Customer">Customer</option>
+            <option value="Service Provider">Service Provider</option>
+        </select>
 
-          <!-- Forgot Password Form -->
-          <div id="forgotPasswordForm" style="display:none;">
-            <h2>Forgot Password</h2>
-            <form id="forgot-password-form">
-              <label for="forgot-email">Enter your email:</label>
-              <input type="email" id="forgot-email" required>
-              <button type="submit">Send Reset Link</button>
-              <p id="forgotPasswordError" style="color:red;display:none;">Error sending reset link</p>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  </main>
+        <button type="submit">Sign Up</button>
+    </form>
 
-  <footer>
-    <p>&copy; 2024 TaskTide Marketplace. All rights reserved.</p>
-  </footer>
+    <script src="js/signup.js"></script>
 </body>
 </html>

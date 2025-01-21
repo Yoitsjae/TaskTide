@@ -99,7 +99,10 @@ body {
 .service-btn:hover {
   background-color: #117A8B; /* Darker shade for hover effect */
 }
-
+.social-icons img {
+  width: 40px;
+  margin: 0 0.5rem;
+}
 .footer {
   background: linear-gradient(90deg, #232f3e, #fce2d4); /* Gradient background for footer */
   color: white;

@@ -1,0 +1,5 @@
+{
+  "activeTasks": [{ "name": "Complete Profile" }],
+  "completedTasks": [{ "name": "Verify Email" }],
+  "notifications": [{ "message": "Welcome to TaskTide!" }]
+}
