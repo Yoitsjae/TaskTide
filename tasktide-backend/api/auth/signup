@@ -1,0 +1,1 @@
+curl -X POST -H "Content-Type: application/json" -d '{"name":"test","email":"test@example.com","password":"test123","role":"Customer"}' http://localhost:5000/api/auth/signup

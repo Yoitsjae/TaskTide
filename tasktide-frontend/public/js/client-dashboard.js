@@ -1,33 +1,35 @@
-document.addEventListener("DOMContentLoaded", async () => {
-    const activeTasks = document.getElementById("active-tasks");
-    const completedTasks = document.getElementById("completed-tasks");
-    const notifications = document.getElementById("notifications");
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import '../css/dashboard.css';
 
-    try {
-        const response = await fetch("http://localhost:5000/api/client/dashboard");
-        const data = await response.json();
+const ClientDashboard = () => {
+    const [userData, setUserData] = useState({});
 
-        // Populate active tasks
-        data.activeTasks.forEach((task) => {
-            const li = document.createElement("li");
-            li.textContent = task.name;
-            activeTasks.appendChild(li);
-        });
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                const token = localStorage.getItem('jwt');
+                const response = await axios.get('/api/user/me', {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+                setUserData(response.data);
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+            }
+        };
+        fetchUserData();
+    }, []);
 
-        // Populate completed tasks
-        data.completedTasks.forEach((task) => {
-            const li = document.createElement("li");
-            li.textContent = task.name;
-            completedTasks.appendChild(li);
-        });
+    return (
+        <div className="dashboard-container">
+            <h1>Welcome, {userData.name}!</h1>
+            <p>Role: {userData.role}</p>
+            <div className="dashboard-links">
+                <a href="/profile">Edit Profile</a>
+                <a href="/services">View Services</a>
+            </div>
+        </div>
+    );
+};
 
-        // Populate notifications
-        data.notifications.forEach((note) => {
-            const li = document.createElement("li");
-            li.textContent = note.message;
-            notifications.appendChild(li);
-        });
-    } catch (err) {
-        console.error("Error fetching client dashboard data:", err);
-    }
-});
+export default ClientDashboard;

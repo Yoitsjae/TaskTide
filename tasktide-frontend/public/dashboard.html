@@ -3,32 +3,48 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard</title>
+  <title>TaskTide Dashboard</title>
+  <link rel="stylesheet" href="css/dashboard.css">
 </head>
 <body>
-  <div id="dashboard">
-    <h1>Welcome, <span id="userName"></span>!</h1>
-    <p>Your role: <span id="userRole"></span></p>
+  <div class="dashboard">
+    <aside class="sidebar">
+      <h2>TaskTide</h2>
+      <nav>
+        <ul>
+          <li><a href="client-dashboard.html">Dashboard</a></li>
+          <li><a href="profile.html">Profile</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="logout.html">Logout</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <header class="header">
+        <h1>Welcome, [User Name]</h1>
+      </header>
+
+      <section class="info">
+        <div class="card">
+          <h3>Role</h3>
+          <p>Customer</p>
+        </div>
+        <div class="card">
+          <h3>Services Booked</h3>
+          <p>3</p>
+        </div>
+        <div class="card">
+          <h3>Payment Status</h3>
+          <p>Confirmed</p>
+        </div>
+      </section>
+
+      <section class="actions">
+        <a href="book-service.html" class="btn">Book a Service</a>
+        <a href="service-history.html" class="btn">View Service History</a>
+      </section>
+    </main>
   </div>
-
-  <script>
-    const params = new URLSearchParams(window.location.search);
-    const email = params.get("email");
-
-    async function loadDashboard() {
-      try {
-        const response = await fetch(`http://localhost:5000/api/auth/dashboard?email=${email}`);
-        const user = await response.json();
-
-        document.getElementById("userName").textContent = user.name;
-        document.getElementById("userRole").textContent = user.role;
-      } catch (error) {
-        console.error(error);
-        alert("Failed to load dashboard.");
-      }
-    }
-
-    loadDashboard();
-  </script>
 </body>
 </html>

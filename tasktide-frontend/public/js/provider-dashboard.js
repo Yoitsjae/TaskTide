@@ -1,29 +1,36 @@
-document.addEventListener("DOMContentLoaded", async () => {
-    const assignedTasks = document.getElementById("assigned-tasks");
-    const taskRequests = document.getElementById("task-requests");
-    const earnings = document.getElementById("earnings");
+// File: /tasktide-frontend/src/pages/ProviderDashboard.js
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import '../css/dashboard.css';
 
-    try {
-        const response = await fetch("http://localhost:5000/api/provider/dashboard");
-        const data = await response.json();
+const ProviderDashboard = () => {
+    const [userData, setUserData] = useState({});
 
-        // Populate assigned tasks
-        data.assignedTasks.forEach((task) => {
-            const li = document.createElement("li");
-            li.textContent = task.name;
-            assignedTasks.appendChild(li);
-        });
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                const token = localStorage.getItem('jwt');
+                const response = await axios.get('/api/user/me', {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+                setUserData(response.data);
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+            }
+        };
+        fetchUserData();
+    }, []);
 
-        // Populate task requests
-        data.taskRequests.forEach((request) => {
-            const li = document.createElement("li");
-            li.textContent = request.name;
-            taskRequests.appendChild(li);
-        });
+    return (
+        <div className="dashboard-container">
+            <h1>Welcome, {userData.name}!</h1>
+            <p>Role: {userData.role}</p>
+            <div className="dashboard-links">
+                <a href="/profile">Edit Profile</a>
+                <a href="/my-services">Manage My Services</a>
+            </div>
+        </div>
+    );
+};
 
-        // Populate earnings
-        earnings.textContent = `$${data.earnings}`;
-    } catch (err) {
-        console.error("Error fetching provider dashboard data:", err);
-    }
-});
+export default ProviderDashboard;

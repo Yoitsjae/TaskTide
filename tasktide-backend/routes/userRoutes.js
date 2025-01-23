@@ -1,24 +1,15 @@
-// File: tasktide-backend/routes/userRoutes.js
 const express = require('express');
-const pool = require('../utils/db');
+const { signupUser, loginUser } = require('../controllers/userController');
 
 const router = express.Router();
 
-// Get user profile
-router.get('/:id', async (req, res) => {
-    const { id } = req.params;
+// Signup route
+router.post('/signup', signupUser);
 
-    try {
-        const result = await pool.query('SELECT * FROM users WHERE id = $1', [id]);
-        const user = result.rows[0];
-        if (!user) {
-            return res.status(404).json({ error: 'User not found' });
-        }
+// Login route
+router.post('/login', loginUser);
 
-        res.json(user);
-    } catch (err) {
-        res.status(500).json({ error: 'Failed to fetch user' });
-    }
-});
+// Payment confirmation webhook route for PayPal IPN
+router.post('/paypal-ipn', userController.confirmPayment);
 
 module.exports = router;
