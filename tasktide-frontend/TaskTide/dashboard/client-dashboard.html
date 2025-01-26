@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskTide - Client Dashboard</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <script src="../assets/js/app.js" defer></script>
+</head>
+<body>
+    <header class="header">
+        <img src="../assets/images/logo.png" alt="TaskTide Logo" class="logo">
+        <div class="user-info">
+            <span id="username">Jane Doe</span> - <span id="role">Customer</span>
+            <button id="logout-btn">Logout</button>
+        </div>
+    </header>
+    <aside class="sidebar">
+        <ul>
+            <li><a href="client-dashboard.html">Dashboard</a></li>
+            <li><a href="chat.html">Messages</a></li>
+            <li><a href="#">Job History</a></li>
+            <li><a href="client-profile.html">Profile</a></li>
+            <li><a href="#">Support</a></li>
+        </ul>
+    </aside>
+    <main class="dashboard-content">
+        <section class="cards">
+            <div class="card">
+                <h3>Active Jobs</h3>
+                <p>No active jobs at the moment.</p>
+            </div>
+            <div class="card">
+                <h3>Job History</h3>
+                <p>You have completed 5 jobs.</p>
+                <button>View History</button>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

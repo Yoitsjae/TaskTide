@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Provider Profile | TaskTide</title>
+  <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+  <header class="header">
+    <img src="../assets/images/logo.png" alt="TaskTide Logo" class="logo">
+    <div class="user-info">
+      <span id="user-name">John Smith</span> - <span id="user-role">Service Provider</span>
+      <img src="assets/avatar-provider.jpg" alt="Profile Image" class="profile-image">
+    </div>
+  </header>
+
+  <nav class="sidebar">
+    <ul>
+      <li><a href="provider-dashboard.html">Dashboard</a></li>
+      <li><a href="chat.html">Messages</a></li>
+      <li><a href="#">Job Bids</a></li>
+      <li><a href="provider-profile.html" class="active">Profile</a></li>
+      <li><a href="#">Support</a></li>
+      <li><a href="#">Logout</a></li>
+    </ul>
+  </nav>
+
+  <main class="main-content">
+    <section class="profile-section">
+      <h2>Profile Information</h2>
+      <form id="profile-form">
+        <div class="form-group">
+          <label for="full-name">Full Name</label>
+          <input type="text" id="full-name" value="John Smith">
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" value="john.smith@example.com">
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+          <input type="text" id="phone" value="+27 123 456 789">
+        </div>
+        <div class="form-group">
+          <label for="location">Location</label>
+          <input type="text" id="location" value="Cape Town, South Africa">
+        </div>
+        <div class="form-group">
+          <label for="services">Services Offered</label>
+          <textarea id="services" rows="4">Plumbing, Electrical Repair, Painting</textarea>
+        </div>
+        <button type="button" class="btn">Save Changes</button>
+      </form>
+    </section>
+
+    <section class="reviews-section">
+      <h2>Reviews and Ratings</h2>
+      <div class="review">
+        <h3>Client: Jane Doe</h3>
+        <p>Rating: ★★★★☆</p>
+        <p>Comment: "John was quick and efficient. Highly recommend!"</p>
+      </div>
+      <div class="review">
+        <h3>Client: Emily Brown</h3>
+        <p>Rating: ★★★★★</p>
+        <p>Comment: "Fantastic service! Very professional and on time."</p>
+      </div>
+    </section>
+
+    <section class="portfolio-section">
+      <h2>Portfolio</h2>
+      <div class="portfolio-grid">
+        <div class="portfolio-item">
+          <img src="assets/plumbing-job.jpg" alt="Plumbing Job">
+          <p>Bathroom Plumbing Installation</p>
+        </div>
+        <div class="portfolio-item">
+          <img src="assets/electrical-repair.jpg" alt="Electrical Repair">
+          <p>Electrical Panel Repair</p>
+        </div>
+        <div class="portfolio-item">
+          <img src="assets/painting-job.jpg" alt="Painting Job">
+          <p>Interior Painting Project</p>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

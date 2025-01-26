@@ -1,18 +1,25 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
 
-function Navbar() {
+const Navbar = ({ userName, userRole }) => {
   return (
-    <nav className="navbar">
-      <h1>TaskTide</h1>
-      <ul>
-        <li><Link to="/">Home</Link></li>
-        <li><Link to="/services">Services</Link></li>
-        <li><Link to="/profile">Profile</Link></li>
-        <li><Link to="/admin">Admin</Link></li>
-      </ul>
-      <button className="login-btn">Login/Signup</button>
-    </nav>
+    <div style={{
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      background: '#232f3e',
+      color: '#fff',
+      padding: '10px 20px',
+    }}>
+      <h3>TaskTide</h3>
+      <div>
+        <span>{userName} - {userRole}</span>
+        <div>
+          <Link to="/logout" style={{ color: '#fff', marginLeft: '10px' }}>Logout</Link>
+        </div>
+      </div>
+    </div>
   );
-}
+};
 
 export default Navbar;

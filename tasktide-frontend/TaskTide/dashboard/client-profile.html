@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Client Profile | TaskTide</title>
+  <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+  <header class="header">
+    <img src="../assets/images/logo.png" alt="TaskTide Logo" class="logo">
+    <div class="user-info">
+      <span id="user-name">Jane Doe</span> - <span id="user-role">Customer</span>
+      <img src="assets/avatar-client.jpg" alt="Profile Image" class="profile-image">
+    </div>
+  </header>
+
+  <nav class="sidebar">
+    <ul>
+      <li><a href="client-dashboard.html">Dashboard</a></li>
+      <li><a href="chat.html">Messages</a></li>
+      <li><a href="#">Requested Services</a></li>
+      <li><a href="client-profile.html" class="active">Profile</a></li>
+      <li><a href="#">Support</a></li>
+      <li><a href="#">Logout</a></li>
+    </ul>
+  </nav>
+
+  <main class="main-content">
+    <section class="profile-section">
+      <h2>Profile Information</h2>
+      <form id="profile-form">
+        <div class="form-group">
+          <label for="full-name">Full Name</label>
+          <input type="text" id="full-name" value="Jane Doe" disabled>
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" value="jane.doe@example.com" disabled>
+        </div>
+        <div class="form-group">
+          <label for="location">Location</label>
+          <input type="text" id="location" value="Cape Town, South Africa">
+        </div>
+        <button type="button" class="btn">Save Changes</button>
+      </form>
+    </section>
+  </main>
+</body>
+</html>

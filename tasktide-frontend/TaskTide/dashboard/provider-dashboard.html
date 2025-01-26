@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Provider Dashboard | TaskTide</title>
+  <link rel="stylesheet" href="../assets/css/styles.css">
+  <script src="scripts.js" defer></script>
+</head>
+<body>
+  <header class="header">
+    <img src="../assets/images/logo.png" alt="TaskTide Logo" class="logo">
+    <div class="user-info">
+      <span id="user-name">John Smith</span> - <span id="user-role">Service Provider</span>
+      <img src="../assets/avatar-provider.jpg" alt="Profile Image" class="profile-image">
+    </div>
+  </header>
+
+  <nav class="sidebar">
+    <ul>
+      <li><a href="provider-dashboard.html" class="active">Dashboard</a></li>
+      <li><a href="chat.html">Messages</a></li>
+      <li><a href="#">Job Bids</a></li>
+      <li><a href="provider-profile.html">Profile</a></li>
+      <li><a href="#">Support</a></li>
+      <li><a href="#">Logout</a></li>
+    </ul>
+  </nav>
+
+  <main class="main-content">
+    <section class="card-section">
+      <h2>Active Jobs</h2>
+      <div class="card">
+        <h3>Plumbing Installation</h3>
+        <p>Status: Ongoing</p>
+        <p>Type: Fixed</p>
+        <p>Price: $500</p>
+        <button class="btn">View Details</button>
+      </div>
+      <div class="card">
+        <h3>Leaky Faucet Repair</h3>
+        <p>Status: Scheduled</p>
+        <p>Type: Hourly</p>
+        <p>Rate: $50/hour</p>
+        <button class="btn">View Details</button>
+      </div>
+    </section>
+
+    <section class="card-section">
+      <h2>Open Bids</h2>
+      <div class="card">
+        <h3>Electrical Repair</h3>
+        <p>Bids: 5</p>
+        <button class="btn">Place Bid</button>
+      </div>
+    </section>
+
+    <section class="card-section">
+      <h2>Job History</h2>
+      <div class="card">
+        <h3>Painting Service</h3>
+        <p>Completed: January 2025</p>
+        <p>Rating: 5 Stars</p>
+        <p>Price: $300</p>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

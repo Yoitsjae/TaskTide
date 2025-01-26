@@ -1,0 +1,185 @@
+/* styles.css */
+
+/* Global Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Arial', sans-serif;
+}
+
+body {
+  background-color: #f8f9fa;
+  color: #333;
+}
+
+/* Header */
+header {
+  background-color: #117a8b; /* Dark Blue */
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+}
+
+header img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+header .user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+header .user-info h3 {
+  margin-right: 10px;
+  font-size: 18px;
+}
+
+header nav {
+  display: flex;
+  gap: 20px;
+}
+
+header nav a {
+  text-decoration: none;
+  color: white;
+  font-size: 16px;
+}
+
+header nav a:hover {
+  text-decoration: underline;
+}
+
+/* Main Content */
+main {
+  padding: 20px;
+}
+
+h2 {
+  font-size: 24px;
+  color: #6C757D; /* Gray */
+  margin-bottom: 20px;
+}
+
+.dashboard-section {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.job-card {
+  background-color: #f1f3f5;
+  padding: 15px;
+  border-radius: 10px;
+  margin: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.job-card p {
+  margin: 0;
+  color: #333;
+}
+
+.job-card button {
+  background-color: #17A2B8; /* Light Blue */
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.job-card button:hover {
+  background-color: #117a8b; /* Dark Blue */
+}
+
+/* Profile Section */
+.profile-info {
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.profile-info img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+}
+
+.profile-info div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.profile-info p {
+  font-size: 16px;
+  margin: 5px 0;
+}
+
+/* Modal Styles */
+#logout-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+#logout-modal .modal-content {
+  background-color: white;
+  padding: 30px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+#logout-modal button {
+  background-color: #17A2B8; /* Light Blue */
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  margin: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#logout-modal button:hover {
+  background-color: #117a8b; /* Dark Blue */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  header {
+      flex-direction: column;
+      align-items: flex-start;
+  }
+
+  header nav {
+      flex-direction: column;
+      gap: 10px;
+  }
+
+  .profile-info {
+      flex-direction: column;
+      align-items: center;
+  }
+
+  .profile-info img {
+      width: 100px;
+      height: 100px;
+  }
+}

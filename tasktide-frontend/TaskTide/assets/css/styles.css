@@ -5,6 +5,53 @@
   box-sizing: border-box;
   font-family: Arial, sans-serif;
 }
+/* General header styles */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Ensures space between elements in the header */
+  position: fixed; /* Makes the header fixed at the top */
+  top: 0;
+  left: 0;
+  width: 100%; /* Stretches the header across the screen */
+  background-color: #f8f9fa; /* Light background for contrast */
+  padding: 10px 20px; /* Add spacing for aesthetics */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow for depth */
+  z-index: 1000; /* Ensures the header is above all other elements */
+}
+
+/* Logo styles */
+.header .logo {
+  font-size: 1.5rem; /* Adjust the font size */
+  font-weight: bold; /* Make the text bold */
+  color: #117a8b; /* Accent color for the logo */
+  text-decoration: none; /* Removes any underline */
+  position: fixed; /* Fixes the logo's position */
+  top: 5%; /* Vertically centers the logo */
+  right: 20px; /* Pushes the logo to the far right */
+  transform: translateY(-50%); /* Centers it perfectly vertically */
+}
+
+/* Optional hover effect for the logo */
+.header .logo:hover {
+  color: #17a2b8; /* Slightly lighter color on hover */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* Adds a shadow effect */
+}
+
+/* Profile Section (Optional) */
+.user-info {
+  display: flex;
+  align-items: center;
+}
+
+.profile-image {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-left: 10px;
+  object-fit: cover;
+  border: 2px solid #ffffff; /* Add a border for a polished look */
+}
 
 body {
   background-color: #f9f9f9;
@@ -27,6 +74,10 @@ header {
 header .logo {
   font-size: 1.5rem;
   font-weight: bold;
+  height: 100px;
+  position: absolute;
+  border-radius: 50%;
+  z-index: 10;
 }
 
 header .user-info {
@@ -73,7 +124,7 @@ header .user-info .profile-image {
 
 .sidebar ul li a.active,
 .sidebar ul li a:hover {
-  background: #17A2B8;
+  background: #cd8d7d;
 }
 
 /* Main Content */
@@ -197,7 +248,7 @@ h2 {
 
 .chat-input button {
   padding: 0.8rem;
-  background: #117a8b;
+  background: #11778bdb;
   color: #fff;
   border: none;
   border-radius: 0 4px 4px 0;

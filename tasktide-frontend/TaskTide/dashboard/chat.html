@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat | TaskTide</title>
+  <link rel="stylesheet" href="../assets/css/styles.css">
+  <script src="../assets/js/chat.js" defer></script>
+</head>
+<body>
+  <header class="header">
+    <img src="../assets/images/logo.png" alt="TaskTide Logo" class="logo">
+    <div class="user-info">
+      <span id="user-name">John Smith</span> - <span id="user-role">Service Provider</span>
+    </div>
+  </header>
+
+  <nav class="sidebar">
+    <ul>
+      <li><a href="provider-dashboard.html">Dashboard</a></li>
+      <li><a href="chat.html" class="active">Messages</a></li>
+      <li><a href="#">Job Bids</a></li>
+      <li><a href="provider-profile.html">Profile</a></li>
+      <li><a href="#">Support</a></li>
+      <li><a href="#">Logout</a></li>
+    </ul>
+  </nav>
+
+  <main class="main-content">
+    <section class="chat-section">
+      <div class="chat-header">
+        <h2>Messages</h2>
+      </div>
+      <div class="chat-box">
+        <div class="message received">Hi, I need help with my plumbing issue.</div>
+        <div class="message sent">Sure, when can we schedule an inspection?</div>
+      </div>
+      <div class="chat-input">
+        <input type="text" placeholder="Type your message...">
+        <button class="btn">Send</button>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

@@ -23,6 +23,9 @@ app.get('/api/protected', authenticateUser, (req, res) => {
   res.status(200).json({ message: 'This is a protected route.', user: req.user });
 });
 
+// Payment confirmation route for PayPal IPN
+app.post('/api/paypal-ipn', userRoutes);
+
 // Default route (Optional)
 app.get('/', (req, res) => {
   res.send('Welcome to TaskTide API');

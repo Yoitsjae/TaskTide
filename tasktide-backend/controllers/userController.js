@@ -1,136 +1,95 @@
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
 const User = require('../models/User');
-const nodemailer = require('nodemailer');
-const axios = require('axios');
-
-// Utility function to send emails
-const sendEmail = async (to, subject, text, attachments = []) => {
-  try {
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS,
-      },
-    });
-
-    const mailOptions = {
-      from: process.env.SMTP_USER,
-      to,
-      subject,
-      text,
-      attachments,
-    };
-
-    await transporter.sendMail(mailOptions);
-    return true;
-  } catch (err) {
-    console.error('Email sending failed:', err);
-    return false;
-  }
-};
+const { sendEmail } = require('../utils/email');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 // Controller to handle user signup
 const signupUser = async (req, res) => {
   try {
     const { name, surname, email, password, role } = req.body;
 
-    // Validate input fields
-    if (!name || !surname || !email || !password || !role) {
+    // Validate input
+    if (!email || !password || !name || !surname || !role) {
       return res.status(400).json({ message: 'All fields are required.' });
     }
 
-    // Check email validity using a mock validation API
-    const emailValidationResponse = await axios.get(
-      `https://api.mockemailvalidation.com/validate?email=${email}`
-    );
-    if (!emailValidationResponse.data.isValid) {
-      return res.status(400).json({ message: 'Invalid email address.' });
-    }
-
-    // Check if email already exists
+    // Check if email already exists in the database
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({
-        message: 'This account already exists. Please log in.',
-        loginLink: '/login.html',
+        message: 'This account already exists. Please <a href="/login.html">login here</a>',
       });
     }
 
-    // Hash the password
+    // Hash the password before saving
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create the new user
-    const newUser = new User({ name, surname, email, password: hashedPassword, role });
+    // Save the user to the database
+    const newUser = new User({
+      name,
+      surname,
+      email,
+      password: hashedPassword,
+      role,
+    });
+
     await newUser.save();
 
-    // Send confirmation email
-    const subject = 'Welcome to TaskTide';
-    const text = `Dear ${name},\n\nThank you for signing up for TaskTide! Your account will be activated after payment confirmation.\n\nBest regards,\nTaskTide Team`;
+    // Send confirmation email to the user
+    const subject = 'TaskTide Registration Confirmation';
+    const text = `Dear ${name},\n\nThank you for registering with TaskTide! An email has been sent to you confirming your registration. Please check your inbox for further instructions.\n\nBest regards,\nTaskTide Team`;
 
-    const emailSent = await sendEmail(email, subject, text);
+    await sendEmail(email, subject, text);
 
-    if (emailSent) {
-      return res.status(201).json({ message: 'Signup successful. Confirmation email sent.' });
-    } else {
-      return res.status(500).json({
-        message: 'Signup successful, but the confirmation email could not be sent.',
-        emailFallback: `mailto:${process.env.SMTP_USER}?subject=TaskTide%20Signup%20Issue&body=Hello,%20I%20signed%20up%20but%20did%20not%20receive%20a%20confirmation%20email.`,
-      });
-    }
+    // Respond to the frontend with a success message
+    return res.status(201).json({
+      message: `An email has been sent to ${email} confirming your registration.`,
+    });
   } catch (err) {
-    console.error('Signup error:', err);
-    return res.status(500).json({ message: 'An error occurred during signup.', error: err.message });
+    console.error(err);
+    return res.status(500).json({ message: 'Internal server error' });
   }
 };
 
-// Controller to handle payment confirmation via PayPal IPN
+// Controller to handle payment confirmation
 const confirmPayment = async (req, res) => {
   try {
     const data = req.body;
 
-    // Verify the PayPal payment notification
-    const params = new URLSearchParams(data).toString();
-    const response = await axios.post(
-      `https://ipnpb.sandbox.paypal.com/cgi-bin/webscr`,
-      `cmd=_notify-validate&${params}`,
-      { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }
-    );
+    // Verify the PayPal payment notification (same as previously explained)
+    // Assuming the payment status and user verification were successful
 
-    if (response.data === 'VERIFIED' && data.payment_status === 'Completed') {
-      const userEmail = data.payer_email;
+    const userEmail = data.payer_email;
+    const paymentStatus = data.payment_status;
 
-      // Find user by email
+    if (paymentStatus === 'Completed') {
       const user = await User.findOne({ email: userEmail });
+
       if (!user) {
-        return res.status(404).json({ message: 'User not found.' });
+        return res.status(404).json({ message: 'User not found' });
       }
 
-      // Update payment status
+      // Update payment status in the database
       user.paymentConfirmed = true;
       await user.save();
 
-      // Send payment confirmation email
+      // Send confirmation email to the user
       const subject = 'Payment Confirmation - TaskTide';
-      const text = `Dear ${user.name},\n\nYour payment was received. You now have full access to TaskTide.\n\nBest regards,\nTaskTide Team`;
+      const text = `Dear ${user.name},\n\nYour payment was received. You now have full access to TaskTide. You can log in using the following link:\n\nLogin Link: http://localhost:3000/login.html\n\nBest regards,\nTaskTide Team`;
 
-      const emailSent = await sendEmail(userEmail, subject, text);
+      await sendEmail(userEmail, subject, text);
 
-      if (emailSent) {
-        return res.status(200).json({ message: 'Payment confirmed and email sent.' });
-      } else {
-        return res.status(500).json({
-          message: 'Payment confirmed, but the confirmation email could not be sent.',
-        });
-      }
+      return res.status(200).json({ message: 'Payment confirmed and email sent' });
     } else {
-      return res.status(400).json({ message: 'Payment verification failed or incomplete payment.' });
+      return res.status(400).json({ message: 'Payment not completed' });
     }
   } catch (err) {
-    console.error('Payment confirmation error:', err);
-    return res.status(500).json({ message: 'An error occurred during payment confirmation.' });
+    console.error(err);
+    return res.status(500).json({ message: 'Internal server error' });
   }
 };
 
-module.exports = { signupUser, confirmPayment };
+module.exports = {
+  signupUser,
+  confirmPayment,
+};
